@@ -1,0 +1,10 @@
+The icons here are all the Polymer icons (24px variant) from the Polymer project
+on GitHub (https://github.com/Polymer/). To the best of my knowledge, as long as
+I am including the license (which is inside this folder in the package) this should
+be considered appropriate use.
+
+If not, please feel free to contact me and I'll gladly update it or something.
+
+Note: Neither the name of Google Inc. nor the names of its contributors may be used
+to endorse or promote products derived from this software without specific prior
+written permission.

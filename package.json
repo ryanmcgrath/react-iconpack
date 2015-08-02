@@ -1,0 +1,43 @@
+{
+    "name": "react-svgpack",
+    "description": "A React Component for handling SVGs coupled with Babel and Browserify plugins to only bundle the SVGs you use.",
+    "author": "Ryan McGrath",
+    "version": "1.0.0",
+    "license": "MIT",
+
+    "dependencies": {
+        "svgo": "^0.5.3",
+        "lodash": "^3.10.1",
+        "through2": "^2.0.0",
+        "async": "^1.4.0"
+    },
+
+    "devDependencies": {
+        "jest": "",
+        "jasmine-node": ""
+    },
+    "scripts": {"test": "jest"},
+
+    "keywords": [
+        "react",
+        "browserify-plugin",
+        "babel-plugin",
+        "browserify",
+        "babel",
+        "svg",
+        "icons",
+        "polymer"
+    ],
+    
+    "maintainers": [{
+        "name": "Ryan McGrath",
+        "email": "ryan@venodesigns.net",
+        "web": "http://venodesigns.net/"
+    }],
+    
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ryanmcgrath/react-svgpack.git"
+    },
+    "bugs": {"url": "https://github.com/ryanmcgrath/react-svgpack/issues"}
+}

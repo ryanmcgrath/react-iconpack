@@ -1,0 +1,5 @@
+This set of icons is the Font-Awesome library in SVG format, provided by the author Dave Gandy here: 
+http://www.flaticon.com/packs/font-awesome
+
+It's licensed under a Creative Commons license. In accordance with the license these SVG files have been unmodified, and the existence of these icons in this project does not constitute an endorsement from the creators of Font Awesome.
+http://creativecommons.org/licenses/by/3.0/
