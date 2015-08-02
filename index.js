@@ -1,21 +1,21 @@
 /**
- *  SVGPack is a library to make automating SVG/PNG usage in React
+ *  react-iconpack is a library to make automating SVG/PNG icon usage in React
  *  a bit more streamlined. It consists of a few key components:
  *
  *      - A Babel transformer/plugin that determines which SVG
  *          files you actually want to load, straight from your
  *          source.
  *
- *      - An easy to use <SVG.../> React JSX tag that ties in with
+ *      - An easy to use <Icon.../> React JSX tag that ties in with
  *          this library.
  *
  *      - A Browserify plugin that will grab your SVG files, optimize
  *          them, and auto-inject them into your bundle as a require()-able
- *          module. The <SVG.../> tag will also transparently handle adding
+ *          module. The <Icon.../> tag will also transparently handle adding
  *          things to the browser document for you.
  *
  *      - Bonus: For browsers that don't support PNG (e.g, IE8) you can
- *          instruct SVGPack to build a module with base64'd PNGs.
+ *          instruct IconPacker to build a module with base64'd PNGs.
  *
  *      Found a bug, use Webpack, need binary pngs instead of base64?
  *      Send a pull request. :)
@@ -41,17 +41,15 @@ try {
 
 
 /**
- *  SVGPack, constructor. The only truly required option is the 
- *  "svgSourceDirectory", which should be the full path to the root
- *  directory where your source SVGs are located.
+ *  IconPackerer constructor.
  *
  *  @constructor
  *  @param {Object} options Options
- *  @return {Object} An instance of SVGPack to do things with.
+ *  @return {Object} An instance of IconPacker to do things with.
  */
-var SVGPack = function(options) {
-    if(!(this instanceof SVGPack))
-        return new SVGPack(options);
+var IconPacker = function(options) {
+    if(!(this instanceof IconPacker))
+        return new IconPacker(options);
 
     // This is a reference to the directory where we've got
     // provided SVG files held. The user can specify a root directory of
@@ -62,6 +60,11 @@ var SVGPack = function(options) {
     this.opts = merge({
         verbose: false,
         mode: 'svg',
+
+        // JSX tags to pick up
+        JSXTagNames: ['Icon'],
+        injectReactComponent: true,
+        iconLibraryNamespace: 'react-iconpack-icons',
         
         // We provide some default SVGO options that work well for the icons in this
         // project; users can override but keep in mind that it's ill-advised at the time
@@ -135,7 +138,7 @@ var SVGPack = function(options) {
  *
  *  @param {Function} callback Upon completion this junks runs.
  */
-SVGPack.prototype._readAndOptimizeSVGs = function(key, callback) {
+IconPacker.prototype._readAndOptimizeSVGs = function(key, callback) {
     var packer = this,
         internalFilePath = this._internalSVGDirectory + key + '.svg',
         filePath = packer.opts.svgSourceDirectory + key + '.svg';
@@ -161,19 +164,19 @@ SVGPack.prototype._readAndOptimizeSVGs = function(key, callback) {
 
 
 /**
- *  A Babel "plugin/transformer" that just tracks unique <SVG.../>
+ *  A Babel "plugin/transformer" that just tracks unique <Icon.../>
  *  JSX tags in your source code. Note that this does absolutely no
  *  modifications - just accumulates the unique SVG uris for the mapping.
  *
  *  @param {Object} babel This will be auto-passed, most likely, by Babel.
  *  @returns {Object} babel.Transformer used for the babel'ing. You know the one.
  */
-SVGPack.prototype._SVGTracker = function(babel) {
+IconPacker.prototype._SVGTracker = function(babel) {
     var packer = this;
     
-    return new babel.Transformer('react-svgpack', {
+    return new babel.Transformer('react-iconpack', {
         JSXElement: function JSXElement(node, parent, scope, file) {
-            if(node.openingElement.name.name !== 'SVG')
+            if(packer.opts.JSXTagNames.indexOf(node.openingElement.name.name) < 0)
                 return;
 
             var attributes = node.openingElement.attributes,
@@ -193,20 +196,11 @@ SVGPack.prototype._SVGTracker = function(babel) {
 
 /**
  *  A Browserify plugin that hooks in to the Browserify build pipeline and injects
- *  your icons as a require()-able module. Really you don't even need to require()
- *  them down the road as the <SVG.../> tag will handle injecting it for you, but
- *  it could prove useful in some cases I suppose - JUST:
- *
- *      var icons = require('react-svgpack-icons');
- *
- *  or if you're into that ES6:
- *
- *      import icons from 'react-svgpack-icons';
+ *  your icons and a tag as a require()-able module.
  *
  *  If you use another module loader or something I'm sure you can probably figure
- *  it out - I tend to stick with the above. This also handles injecting the <SVG/>
- *  tag library into your bundle, importable as "react-svgpack".
- *
+ *  it out. 
+ *  
  *  Originally I wanted to find a way to just have Babel shove this in, but I 
  *  couldn't figure out a way to do it cleanly so this works. If you use Webpack
  *  and would like to see a plugin like this, pull requests are welcome.
@@ -218,13 +212,13 @@ SVGPack.prototype._SVGTracker = function(babel) {
  *  @param {String} imgType Either "png" or "svg".
  *  @returns {Object} browserify The instance being operated on.
  */
-SVGPack.prototype._BrowserifyInjector = function(browserify, opts) {
+IconPacker.prototype._BrowserifyInjector = function(browserify, opts) {
     var startListeningToThisCompleteMessOfALibraryAgain = function() {
         browserify.pipeline.get('pack').unshift(this.compile());
     }.bind(this);
 
-    browserify.external('react-svgpack');
-    browserify.external('react-svgpack-icons');
+    browserify.external('react-iconpack');
+    browserify.external('react-iconpack-icons');
     browserify.on('reset', startListeningToThisCompleteMessOfALibraryAgain);
     startListeningToThisCompleteMessOfALibraryAgain();
     return browserify;
@@ -241,7 +235,7 @@ SVGPack.prototype._BrowserifyInjector = function(browserify, opts) {
  *
  *  @returns {Function} A through2 stream in object mode, which Browserify needs.
  */
-SVGPack.prototype.compile = function() {
+IconPacker.prototype.compile = function() {
     var packer = this,
         write = function(buf, enc, next) {
             next(null, buf);
@@ -254,9 +248,9 @@ SVGPack.prototype.compile = function() {
         async.map(keys, packer.readAndOptimizeSVGs, function(error, results) {
             fs.readFile(ReactSVGComponentFilePath, 'utf8', function(e, data) {
                 stream.push({
-                    id: 'react-svgpack',
-                    externalRequireName: 'react-svgpack',
-                    standaloneModule: 'react-svgpack',
+                    id: 'react-iconpack',
+                    externalRequireName: 'react-iconpack',
+                    standaloneModule: 'react-iconpack',
                     hasExports: true,
                     source: data,
                     
@@ -267,9 +261,9 @@ SVGPack.prototype.compile = function() {
                 });
 
                 var icons = {
-                    id: 'react-svgpack-icons',
-                    externalRequireName: 'react-svgpack-icons',
-                    standaloneModule: 'react-svgpack-icons',
+                    id: 'react-iconpack-icons',
+                    externalRequireName: 'react-iconpack-icons',
+                    standaloneModule: 'react-iconpack-icons',
                     hasExports: true,
                     deps: {}
                 };
@@ -304,7 +298,7 @@ SVGPack.prototype.compile = function() {
  *
  *  @returns {String} The source for this "module" as a String, which Browserify needs.
  */
-SVGPack.prototype.compileSVGs = function() {
+IconPacker.prototype.compileSVGs = function() {
     var keys = Object.keys(this.SVGS),
         key,
         i = 0,
@@ -340,7 +334,7 @@ SVGPack.prototype.compileSVGs = function() {
  *  
  *  @param {Function} hollaback Called when all the PNGs be converted and the code's done.
  */
-SVGPack.prototype.compilePNGs = function(hollaback) {
+IconPacker.prototype.compilePNGs = function(hollaback) {
     var packer = this,
         keys = Object.keys(this.SVGS);
     
@@ -377,10 +371,10 @@ SVGPack.prototype.compilePNGs = function(hollaback) {
  *  @param {String} key A key for the internal SVGS object.
  *  @param {Function} callback A callback that runs when the PNG is ready.
  */
-SVGPack.prototype.convertSVGtoPNG = function(key, callback) {
+IconPacker.prototype.convertSVGtoPNG = function(key, callback) {
     var packer = this,
         xml = '<?xml version="1.0" encoding="utf-8"?>',
-        patch = '<svg width="32" height="32" preserveAspectRatio="xMinYMin meet" ',
+        patch = '<svg width="32" height="32" preserveAspectRatio="xMidYMid meet" ',
         svg = new Buffer(xml + this.SVGS[key].data.replace('<svg ', patch));
     
     // I'll be honest, chaining APIs annoy me - just lemme use an options object.
@@ -405,4 +399,4 @@ SVGPack.prototype.convertSVGtoPNG = function(key, callback) {
 
 
 // You get that thing I sent ya?
-module.exports = SVGPack;
+module.exports = IconPacker;

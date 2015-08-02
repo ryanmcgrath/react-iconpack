@@ -1,5 +1,5 @@
 {
-    "name": "react-svgpack",
+    "name": "react-iconpack",
     "description": "A React Component for handling SVGs coupled with Babel and Browserify plugins to only bundle the SVGs you use.",
     "author": "Ryan McGrath",
     "version": "1.0.0",
@@ -37,7 +37,7 @@
     
     "repository": {
         "type": "git",
-        "url": "https://github.com/ryanmcgrath/react-svgpack.git"
+        "url": "https://github.com/ryanmcgrath/react-iconpack.git"
     },
-    "bugs": {"url": "https://github.com/ryanmcgrath/react-svgpack/issues"}
+    "bugs": {"url": "https://github.com/ryanmcgrath/react-iconpack/issues"}
 }

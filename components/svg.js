@@ -10,11 +10,11 @@
  *
  *  @author Ryan McGrath <ryan@venodesigns.net>, contributors (see repo)
  *  @license MIT
- *  @repo https://github.com/ryanmcgrath/react-svgpack/
+ *  @repo https://github.com/ryanmcgrath/react-iconpack/
  */
 
 var React = require('react');
-    icons = require('react-svgpack-icons');
+    icons = require('react-iconpack-icons');
 
 
 /**
@@ -31,12 +31,12 @@ var warn = function(msg) {
 /**
  *  The main JSX tag you'll be wanting. Depending on which mode your bundle is
  *  in, it will handle injecting either an <svg> tag or an <img> tag. For any global
- *  styling needs you can safely target the "react-svgpack-icon" class in CSS - you
+ *  styling needs you can safely target the "react-iconpack-icon" class in CSS - you
  *  can also add your own, of course, but there's one there for convenience.
  *
  *  @class
  */
-var SVG = React.createClass({
+module.exports = React.createClass({
     /**
      *  More or less internal method for React; just configures an initial default
      *  setup for properties. You can refer to this as a general guide on what you
@@ -183,7 +183,7 @@ var SVG = React.createClass({
             ) continue;
 
             if(prop === 'className')
-                props.className = 'react-svgpack-icon ' + this.props.className;
+                props.className = 'react-iconpack-icon ' + this.props.className;
 
             props[prop] = this.props[prop];
         }
@@ -226,7 +226,7 @@ var SVG = React.createClass({
             // We always want our specific className here, for target-ability
             // between modes. User should always be able to append theirs though.
             if(prop === 'className') {
-                props.className = 'react-svgpack-icon ' + this.props.className;
+                props.className = 'react-iconpack-icon ' + this.props.className;
                 continue;
             }
 
@@ -252,7 +252,3 @@ var SVG = React.createClass({
         }));
     }
 });
-
-
-// Go forth, lol
-module.exports = SVG;

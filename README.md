@@ -1,4 +1,4 @@
-react-svgpack
+react-iconpack
 ==============
 This project provides a way to utilize SVG icons in React-based projects with easy fallback to PNGs for browsers that don't have SVG support. It provides three pieces:
 
@@ -8,32 +8,36 @@ This project provides a way to utilize SVG icons in React-based projects with ea
 
 - The aforementioned **React Component**, which transparently handles mapping between SVG and IMG tags in various browsers. It's optimized to be fast, and comes with no external dependencies beyond React itself.
 
-- _**Bonus:**_ react-svgpack ships with **over 1,000 ready to use SVG icons** from various different open source projects. Hit the ground running and avoid the tedious task of gathering all the assets you need.
+- _**Bonus:**_ react-iconpack ships with **over 1,000 ready to use SVG icons** from various different open source projects. Hit the ground running and avoid the tedious task of gathering all the assets you need.
 
 Installation and Usage
 ==============
-react-svgpack is currently delivered via npm; if there's some other module vendor system that people want to utilize open a pull request and I'll take a look at it.
+react-iconpack is currently delivered via npm; if there's some other module vendor system that people want to utilize open a pull request and I'll take a look at it.
 
-    npm install react-svgpack
+    npm install react-iconpack
 
-Configuration is pretty straightforward - create an instance of SVGPack and supply the options you want. There are some sensible defaults which are highlighted below.
+Configuration is pretty straightforward - create an instance of IconPacker and supply the options you want. There are some sensible defaults which are highlighted below.
 
 
 ``` javascript
-var SVGPack = require('react-svgpack');
+var IconPacker = require('react-iconpack');
 
-var packer = new SVGPack({
+var packer = new IconPacker({
     // If you need more details about the packing process 
     verbose: false,
+
+    // An Array of JSX tags that you want this to catch - helpful
+    // for overriding.
+    JSXTagNames: ['Icon'],
 
     // Which mode this is running in
     mode: 'svg',
 
     // Optional: You can provide your own SVG source directory here.
-    // SVGPack will then look here for any custom-supplied icons.
+    // IconPacker will then look here for any custom-supplied icons.
     svgSourceDirectory: null,
 
-    // SVGPack uses svgo behind the scenes, and can pass your
+    // IconPacker uses svgo behind the scenes, and can pass your
     // configuration directly to the SVGO constructor/instance.
     svgo: {
         plugins: [
@@ -84,11 +88,11 @@ You're now good to go! These two plugins will talk to each other and handle crea
 
 ``` javascript
 import React from 'react';
-import SVG from 'react-svgpack';
+import Icon from 'react-iconpack';
 
 class IconShowcase extends React.Component {
     render() {
-        return <SVG uri="polymer/notification/disc_full" width="48" height="48"/>;
+        return <Icon uri="polymer/notification/disc_full" width="48" height="48"/>;
     }
 }
 ```
@@ -107,7 +111,7 @@ The included React Component handles a lot of annoying stuff for you. The breakd
     // The icon identifier to be specified.
     uri: null,
     
-    // react-svgpack default icons come preconfigured with a viewBox
+    // react-iconpack default icons come preconfigured with a viewBox
     // so that you don't have to think about it, but if you ever need
     // to, you can override it here.
     viewBox: null,
@@ -192,8 +196,8 @@ This is an optional installation because the PNGQuant installation could throw w
 With that all said and done, it's as simple as swapping the mode from _'svg'_ to _'png'_. In PNG mode, the library will convert the SVGs you're using into base64 PNG equivalents. IE8 has a ~32kb PNG URI limit, but so far I've yet to find an icon that crosses that.
 
 ```javascript
-var SVGPack = require('react-svgpack');
-var packer = new SVGPack({
+var IconPacker = require('react-iconpack');
+var packer = new IconPacker({
     mode: 'png',
     png: {
         // Your desired options, if applicable
