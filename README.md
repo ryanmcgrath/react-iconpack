@@ -8,7 +8,7 @@ This project provides a way to utilize SVG icons in React-based projects with ea
 
 - The aforementioned **React Component**, which transparently handles mapping between SVG and IMG tags in various browsers. It's optimized to be fast, and comes with no external dependencies beyond React itself.
 
-- _**Bonus:**_ react-iconpack ships with **over 1,000 ready to use SVG icons** from various different open source projects. Hit the ground running and avoid the tedious task of gathering all the assets you need.
+- _**Bonus:**_ react-iconpack ships with **over 1,000 ready to use SVG icons** from various different icon projects. Hit the ground running and avoid the tedious task of gathering all the assets you need.
 
 Installation and Usage
 ==============
