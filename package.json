@@ -2,12 +2,12 @@
     "name": "react-iconpack",
     "description": "A React Component for handling SVGs coupled with Babel and Browserify plugins to only bundle the SVGs you use.",
     "author": "Ryan McGrath",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "license": "MIT",
 
     "dependencies": {
         "svgo": "^0.5.3",
-        "lodash": "^3.10.1",
+        "lodash": "*",
         "through2": "^2.0.0",
         "async": "^1.4.0"
     },
