@@ -43,7 +43,8 @@ var packer = new IconPacker({
         plugins: [
             {removeViewBox: false}, // We tend to need this kept around
             {removeUselessStrokeAndFill: false}, // Can munge graphics
-            {removeEmptyAttrs: false} // Can be useful to keep around
+            {removeEmptyAttrs: false}, // Can be useful to keep around
+            {removeDimensions: true} // Needed for PNGs to work properly
         ]
     },
 

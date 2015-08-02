@@ -76,7 +76,8 @@ var IconPacker = function(options) {
             plugins: [
                 {removeViewBox: false}, // See note above ---^
                 {removeUselessStrokeAndFill: false}, // This can clobber some icons, just leave it.
-                {removeEmptyAttrs: false} // I find this helpful, others may not.
+                {removeEmptyAttrs: false}, // I find this helpful, others may not.
+                {removeDimensions: true}
             ]
         },
         
@@ -376,6 +377,7 @@ IconPacker.prototype.convertSVGtoPNG = function(key, callback) {
         xml = '<?xml version="1.0" encoding="utf-8"?>',
         patch = '<svg width="32" height="32" preserveAspectRatio="xMidYMid meet" ',
         svg = new Buffer(xml + this.SVGS[key].data.replace('<svg ', patch));
+    console.log(svg.toString());
     
     // I'll be honest, chaining APIs annoy me - just lemme use an options object.
     im(svg).background(this.opts.png.background).quality(this.opts.png.quality)
