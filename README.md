@@ -119,7 +119,7 @@ The included React Component handles a lot of annoying stuff for you. The breakd
     
     // This is defaulted as I've found it helps scaling in some 
     // browsers. YMMV, so override as need be!
-    preserveAspectRatio: 'xMinYMin meet',
+    preserveAspectRatio: 'xMidYMid meet',
     
     // Accessibility traits! This component will handle mapping between
     // accessibility requirement differences between <svg> and <img>
