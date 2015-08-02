@@ -225,7 +225,7 @@ Versioning
 ==============
 This project is maintained under the Semantic Versioning guidelines. This Release/versioning policy is based off of the policy used by **[](https://github.com/FortAwesome/Font-Awesome)**, as it seems like it works well there. Releases will be done with the following format:
 
-<major>.<minor>.<patch>
+&lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;
 
 And constructed with the following guidelines:
 
