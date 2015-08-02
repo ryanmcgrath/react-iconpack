@@ -237,7 +237,7 @@ For more information on SemVer, please visit **[http://semver.org/](http://semve
 
 Acknowledgements/Legal
 ==============
-This project supplies icons from a variety of creators, each of whom may have their own licenses. Where applicable these licenses are include inside their respective SVG folder; I've aimed to include icons that don't put too much burden on the implementer, but open a pull request if something seems off.
+This project supplies icons from a variety of creators, each of whom may have their own licenses. Where applicable these licenses are included inside their respective SVG folder; I've aimed to include icons that don't put too much burden on the implementer, but open a pull request if something seems off.
 
 In turn, if an icon author's license requires placing credit for the icons somewhere on your project, you are responsible for doing so. Icon creators work hard and that work isn't (totally) free.
 
