@@ -1,6 +1,6 @@
 react-svgpack
 ==============
-This project provides a way to utilize SVGs in React-based projects with easy fallback to PNGs for browsers that don't have SVG support. It provides three pieces:
+This project provides a way to utilize SVG icons in React-based projects with easy fallback to PNGs for browsers that don't have SVG support. It provides three pieces:
 
 - A **Babel plugin**, to track which SVGs you're using in your codebase in order to bundle only those specific graphics. No more shipping assets that you don't even use. 
 
@@ -93,7 +93,7 @@ class IconShowcase extends React.Component {
 }
 ```
 
-To view the available defalt icons, your best bet is to clone this repo and scope out the _svgs_ folder yourself. When I have time I'll build a github pages site to preview them all or something. Polymer, Font-Awesome and a few others are all available.
+To view the available default icons, your best bet is to clone this repo and scope out the _svgs_ folder yourself. When I have time I'll build a github pages site to preview them all or something. Polymer, Font-Awesome and a few others are all available.
 
 The React Component
 ==============
