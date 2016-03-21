@@ -1,21 +1,20 @@
 /**
  *  This is a React JSX tag that will take care of managing injecting the
  *  icons properly after they've been compiled into your bundle. As long as you're
- *  using the Browserify plugin this will "just work" - if you'd like to see plugins
+ *  using the Browserify or Webpack plugin this will "just work" - if you'd like to see plugins
  *  for other platforms, submit a pull request!
  *
  *  Note that this file is liberally commented; React is pretty intuitive but I prefer
  *  if people can easily decipher what I'm trying to accomplish and learn from it. You
  *  may have a different style, but try to follow it here if you modify this.
  *
- *  @author Ryan McGrath <ryan@venodesigns.net>, contributors (see repo)
+ *  @author Ryan McGrath <ryan@rymc.io>, contributors (see repo)
  *  @license MIT
  *  @repo https://github.com/ryanmcgrath/react-iconpack/
  */
 
 var React = require('react');
-    icons = require('react-iconpack-icons');
-
+var icons = require('react-iconpack-icons');
 
 /**
  *  A very basic and simple wrapper around console.warn, for debug purposes.
@@ -29,8 +28,7 @@ var warn = function(msg) {
 
 
 /**
- *  The main JSX tag you'll be wanting. Depending on which mode your bundle is
- *  in, it will handle injecting either an <svg> tag or an <img> tag. For any global
+ *  The main JSX tag you'll be wanting. For any global
  *  styling needs you can safely target the "react-iconpack-icon" class in CSS - you
  *  can also add your own, of course, but there's one there for convenience.
  *
@@ -53,8 +51,7 @@ module.exports = React.createClass({
             title: '',
             desc: '',
 
-            // These are only used for SVGs as the Browser will do magic by default
-            // for PNGs. Experienced SVG users can override this as necessary but I'm
+            // Experienced SVG users can override this as necessary but I'm
             // interested in providing an easier solution, not the slight headache that
             // SVG can be.
             //
@@ -119,10 +116,10 @@ module.exports = React.createClass({
      */
     shouldComponentUpdate: function(nextProps, nextState) {
         var p = this.props,
-            np = nextProps, // lol
+            np = nextProps,
             k;
  
-        if(this.props === nextProps) // Shallow reference
+        if(this.props === np)
             return false;        
        
         for(k in p)
@@ -137,67 +134,12 @@ module.exports = React.createClass({
     },
 
     /**
-     *  This needs no documentation, it's a render method.
-     *
-     *  @returns {Object} A JSX "SVG" tag configured based on the properties assigned.
-     */
-    render: function() {
-        if(icons.mode === 'png')
-            return this.renderAsPNG();
-        else
-            return this.renderAsSVG();
-    },
-
-    /**
-     *  This seems a little heavy to do here, yes, but I think it's the right
-     *  way to go about it - if anyone has better ideas please feel free to open
-     *  an issue or submit a pull request.
-     *
-     *  Basically, for an <img> tag we need to shuffle some attributes around. We
-     *  also want to make this accessible, if possible - ideally by moving over the
-     *  accessibility attributes from the typical <svg> approach to here. We also
-     *  need to move the uri attribute, and considering it's a base64 PNG I don't
-     *  feel like arbitrarily copying the data to the state and duplicating it.
-     *
-     *  In reality this might be overkill, but hey, it works fine in my opinion.
-     *  Pull request it if it bothers you. We optimize in shouldComponentUpdate
-     *  anyway to make it so this hopefully won't be re-hit too much.
-     *
-     *  @returns {Object} A JSX Img tag with SVG attributes shuffled to match.
-     */
-    renderAsPNG: function() {
-        var props = {
-            src: ['data:image/png;base64,', icons.icons[this.props.uri]].join(''),
-            alt: this.props.title + ': ' + this.props.desc,
-            'aria-labeledby': 'alt'
-        };
-
-        // We don't want to copy these over. This is also rather naive; there's little
-        // reason anyone should be passing Objects or Arrays or whatever the kids are
-        // into these days into this tag, but if they do, it has the potential to get
-        // stupid.
-        for(var prop in this.props) {
-            if(
-                prop === 'src' || prop === 'title' || 
-                prop === 'desc' || prop === 'aria-labeledby'
-            ) continue;
-
-            if(prop === 'className')
-                props.className = 'react-iconpack-icon ' + this.props.className;
-
-            props[prop] = this.props[prop];
-        }
-        
-        return React.createElement('img', React.__spread({},  props));
-    },
-
-    /**
-     *  This is, in comparison, much more straightforward. We provide some default stuff
+     *  We provide some default stuff
      *  that makes working with an SVG tag a bit more like working with an IMG tag.
      *
      *  @returns {Object} A JSX SVG tag configured and what not.
      */
-    renderAsSVG: function() {
+    render: function() {
         var path,
             accessibility,
             icon,

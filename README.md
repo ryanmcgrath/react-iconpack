@@ -6,9 +6,19 @@ This project provides a way to utilize SVG icons in React-based projects with ea
 
 - A **Browserify plugin** that handles the behind-the-scenes aspects of creating your icon library as a require()-able JS module and injecting it into your bundle. This plugin also handles injecting a lightweight React Component which can be utilized to reference graphics.
 
+- A **Webpack plugin** that handles the behind-the-scenes aspects of creating your icon library and injecting it into your bundle. You get the same aforementioned React Icon component that's referenced above, too.
+
 - The aforementioned **React Component**, which transparently handles mapping between SVG and IMG tags in various browsers. It's optimized to be fast, and comes with no external dependencies beyond React itself.
 
 - _**Bonus:**_ react-iconpack ships with **over 1,000 ready to use SVG icons** from various different icon projects. Hit the ground running and avoid the tedious task of gathering all the assets you need.
+
+Note
+==============
+The files in this repository are considered bleeding-edge at the moment. The version currently available on `npm` uses the instructions below; the new version (when released) will feature the Webpack plugin and potentially drop support for generating PNG assets.
+
+The Webpack plugin currently works, but falls apart when caching builds (either via Webpack or Babel) is turned on. This is because I'm currently investigating the best way to integrate with existing cache solutions instead of rolling my own. If you'd like to help out, clone this repository and install the `devDependencies`, then check out the `webpack-test` folder. The `webpack.config.js` includes an example setup for Webpack integration.
+
+In terms of caching, the only issue is that the Babel plugin can't be re-run on source code that's cached as already built. Where/how to store accrued SVG nodes becomes complex, and slightly dependent on the upstream cache. Would love to hear ideas from others!
 
 Installation and Usage
 ==============
